@@ -41,7 +41,7 @@ angular.module('myApp.emulator', ['myApp.services','ngRoute'])
     $scope.soundPort = 0;
     $scope.borderStyle = { 'border-colour': '#000000', 'border-width':'8px', 'border-style': 'solid'};
     var borderColours = ['#000000','#0000CD','#CD0000','#CD00CD','#00CD00','#00CDCD','#CDCD00','#CDCDCD'];
-    var mySampleBuffer;
+    var mySampleBuffer = [];
     var soundPlaying = false;
     var sampleRate;
 

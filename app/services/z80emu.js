@@ -1320,7 +1320,7 @@ myModule.factory('z80emu',['z80disasm',function(z80disasm){
             }
             report = inst.opcode;
         }
-        var v = inst.opcode.split(' ');
+        var v = inst.hasOwnProperty('opcode') ? inst.opcode.split(' ') : ['Error'];
         if (v.length === 1) {
             if (simple_instructions.hasOwnProperty(inst.opcode)) {
                 simple_instructions[inst.opcode](v[0],null,inst);
