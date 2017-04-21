@@ -1,5 +1,5 @@
 {
-  "name": "Speccy bum",
+  "name": "speccy bum",
   "description": "Javascript spectrum emulator",
   "version": "0.0.0",
   "license": "MIT",
@@ -11,6 +11,9 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "angular-strap": "^2.3.12",
-    "foundation": "^5.5.3"
+    "foundation": "^5.5.3",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "modernizr": "^3.5.0"
   }
 }
