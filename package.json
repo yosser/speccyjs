@@ -1,11 +1,12 @@
 {
-  "name": "speccy bum",
+  "name": "speccybum",
   "private": true,
   "version": "0.0.0",
   "description": "Javascript spectrum emulator",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.6.5",
+    "express": "^4.15.2",
     "jasmine-core": "^2.3.4",
     "karma": "~0.12",
     "karma-chrome-launcher": "^0.1.12",
