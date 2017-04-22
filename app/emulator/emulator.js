@@ -69,7 +69,7 @@ angular.module('myApp.emulator', ['myApp.services','ngRoute'])
 
 
     $scope.init = function () {
-        $http.get('/source.txt').success(function(data, status, headers, config) {
+        $http.get('/source.html').success(function(data, status, headers, config) {
             var res = z80asm.assemble(data);
             $scope.parsed = res.parsed;
             $scope.parsedLines = res.parsedLines;
