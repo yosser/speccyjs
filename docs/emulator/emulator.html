@@ -1,0 +1,136 @@
+<div class='container-fluid'>
+    <div class='speccy-holder container-vertical'>
+        <span class='speccy' tabindex='0' ng-keydown="keyDown($event);$event.preventDefault();" ng-keyup="keyUp($event)" ng-blur="noKey()">
+            <canvas id="myCanvas" width="256" height="192" ng-style="borderStyle"></canvas>
+        </span>
+        <ul class="button-group">
+            <button type="button" class='btn btn-sm btn-primary' ng-click="stepCode()">Step</button>
+            <button type="button" class='btn btn-sm btn-primary' ng-click="run()" ng-show='!running'>Start</button>
+            <button type="button" class='btn btn-sm btn-primary' ng-click="stop()" ng-show='running'>Stop</button>
+            <button type="button" class='btn btn-sm btn-primary' ng-click="reset()">Reset</button>
+        </ul>        
+    </div>
+    <div class='registers-holder container-vertical' ng-if='disassembly_preview.length'>    
+        <div class='disassembly-preview'>
+            <table>
+                <tr ng-repeat="d in disassembly_preview"><td>{{ d.address |toHex}}</td><td>{{ d.opcode }}</td></tr>
+            </table>             
+        </div>
+    </div>
+    <div class='registers-holder container-vertical'>
+        <div class='registers'>
+            Registers:
+            <table>
+                <tr>
+                    <td> PC </td>
+                    <td> SP </td>
+                    <td> A </td>
+                    <td> B </td>
+                    <td> C </td>
+                    <td> D </td>
+                    <td> E </td>
+                    <td> H </td>
+                    <td> L </td>
+                    <td> IX </td>
+                    <td> IY </td>
+                    <td> I </td>
+                </tr>
+                <tr>
+                    <td>{{ registers.PC |toHex }}</td>
+                    <td>{{ registers.SP |toHex }}</td>
+                    <td>{{ registers.A |toHex }}</td>
+                    <td>{{ registers.B |toHex }}</td>
+                    <td>{{ registers.C |toHex }}</td>
+                    <td>{{ registers.D |toHex }}</td>
+                    <td>{{ registers.E |toHex }}</td>
+                    <td>{{ registers.H |toHex }}</td>
+                    <td>{{ registers.L |toHex }}</td>
+                    <td>{{ registers.IX |toHex }}</td>
+                    <td>{{ registers.IY |toHex }}</td>
+                    <td>{{ registers.I |toHex }}</td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>{{ registers.A_ |toHex }}</td>
+                    <td>{{ registers.B_ |toHex }}</td>
+                    <td>{{ registers.C_ |toHex }}</td>
+                    <td>{{ registers.D_ |toHex }}</td>
+                    <td>{{ registers.E_ |toHex }}</td>
+                    <td>{{ registers.H_ |toHex }}</td>
+                    <td>{{ registers.L_ |toHex }}</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>    
+            </table>
+        </div> 
+        <div class='flags'>Flags:
+            <table>
+                <tr>
+                    <td> S </td>
+                    <td> Z </td>
+                    <td> H </td>
+                    <td> PV </td>
+                    <td> N </td>
+                    <td> C </td>
+                </tr>
+                <tr>
+                    <td>{{ registers.F |isSet:128 }}</td>
+                    <td>{{ registers.F |isSet:64 }}</td>
+                    <td>{{ registers.F |isSet:32 }}</td>
+                    <td>{{ registers.F |isSet:8 }}</td>
+                    <td>{{ registers.F |isSet:2 }}</td>
+                    <td>{{ registers.F |isSet:1 }}</td>    
+                </tr>
+            </table>        
+        </div>
+    </div>
+    <div class='registers-holder container-vertical'>
+        <div class='t-states'>T States: {{ t_states | toHex }}</div>        
+        <div class='interrupts'>
+            Interrupts:
+            <table>
+                <tr><td>Enabled</td><td>Mode</td></tr>
+                <tr><td>{{ registers.int_enabled}}</td><td>{{ registers.int_mode}}</td></tr>
+            </table>
+        </div>
+        <div class='prev-next'>
+            <table>
+                <tr><td colspan='2'>Instruction:</td></tr>
+                <tr><td>Prev</td><td>{{ report}}</td></tr>
+                <tr><td>Next</td><td>{{ next}}</td></tr>
+            </table>
+        </div>        
+    </div>
+</div>
+<div class='container-fluid'>
+    <div class='container-vertical'>
+        <div><label for='breakpoint'>Breakpoint</label><input name='breakpoint' class='form-input input-sm' ng-model="breakpoint"/></div>
+        <div>
+            <button type="button" class='btn btn-sm btn-primary' ng-click="monitor()" ng-diabled='running || !breakpoint'>Run to</button>
+        </div>
+        <div><label for='watch'>Watch</label><input name='watch' class='form-control input-sm' ng-model="watch_mem"/></div>
+    </div>
+    <div class='container-vertical'>
+        <div>
+            <label for='select-rom'>Select rom</label>
+            <select style='padding:0px' name='select-rom' class='form-control input-sm' ng-model='selected_rom' ng-options='rom.value as rom.name for rom in roms'></select>
+            <button type="button" class='btn btn-sm btn-primary' ng-disabled='!selected_rom || running' ng-click="load()" >Load</button>
+        </div>
+    </div>
+    <div class='container-vertical'>
+        <div><label for='memory'>Memory</label><input name='memory' class='form-input input-sm' ng-model="mem_start"/></div>
+        <div ng-if="mem_start !== ''" data-memory-block data-mem='res.code' class='memory-block'></div>
+    </div>
+</div>
+<div class='container-fluid'>
+    <div class='container-vertical'>
+        <div><button style='display:none;' type="button" class='btn btn-sm btn-primary' ng-click="playSound()">Play Sound</button></div>
+        <div><button type="button" class='btn btn-sm btn-primary' ng-click="disassemble()">Disassemble</button></div>
+        <div>Disassembly:</div>
+        <div ng-repeat="d in disassembly" class='disassembly-preview'>
+            <div>{{ d.address}} : {{ d.opcode}}</div>
+        </div>
+    </div> 
+</div>
