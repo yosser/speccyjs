@@ -1,7 +1,7 @@
-# speccy-bum — a javascript Spectrum emulator
+# speccybum — a javascript Spectrum emulator
 
 
-### Clone speccy-bum
+### Clone speccybum
 
 Clone the angular-seed repository using [git][git]:
 
