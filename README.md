@@ -1,13 +1,13 @@
-# speccybum — a javascript Spectrum emulator
+# speccyjs — a javascript Spectrum emulator
 
 
-### Clone speccybum
+### Clone speccyjs
 
-Clone the angular-seed repository using [git][git]:
+Clone the speccyjs repository using [git][git]:
 
 ```
-git clone https://github.com/yosser/speccybum
-cd speccybum
+git clone https://github.com/yosser/speccyjs
+cd speccyjs
 ```
 
 ### Install Dependencies
@@ -39,4 +39,4 @@ npm start
 
 Now browse to the app at `http://localhost:8080`.
 
-# speccybum
+# speccyjs
