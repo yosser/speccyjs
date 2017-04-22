@@ -13,8 +13,9 @@ angular.module('myApp.emulator', ['myApp.services','ngRoute'])
     function($scope,$interval,$http,z80disasm,z80asm,z80emu,toHexFilter) {
 
     $scope.roms = [
-        {name:'Atic attack',value:'Aticatac'},
-        {name:'Popeye',value:'Popeye'},
+        {name:'Atic attack',value:'ATICATAC'},
+/*        {name:'Head over heels',value:'HEADOVERHEELS'}, */
+        {name:'Popeye',value:'POPEYE'},
         {name:'The hobbit',value:'HOBBIT'}
     ];
 
