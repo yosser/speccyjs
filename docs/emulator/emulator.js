@@ -90,7 +90,7 @@ angular.module('myApp.emulator', ['myApp.services','ngRoute'])
         $scope.stop(true);
         var data = [];
         var oReq = new XMLHttpRequest();
-        oReq.open("GET", '/roms/'+$scope.selected_rom+'.Z80', true);
+        oReq.open("GET", 'roms/'+$scope.selected_rom+'.Z80', true);
         oReq.responseType = "arraybuffer";
 
         oReq.onload = function (oEvent) {
